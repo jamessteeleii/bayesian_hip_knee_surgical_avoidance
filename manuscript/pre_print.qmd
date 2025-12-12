@@ -48,13 +48,13 @@ author:
     email: james@steele-research.com
 affiliations:
   - id: 1
-    name: Kieser Australia, Melbourne, Australia
+    name: Kieser Australia, Melbourne, VIC, Australia
   - id: 2
-    name: Tasmanian Centre for Mental Health Service Innovation, Tasmanian Health Services, Hobart, Australia
+    name: Tasmanian Centre for Mental Health Service Innovation, Tasmanian Health Services, Hobart, TAS, Australia
   - id: 3
-    name: Menzies Institute for Medical Research, University of Tasmania
+    name: Menzies Institute for Medical Research, University of Tasmania, Hobart, TAS, Australia
   - id: 4
-    name: Petterwood Orthopaedics, Calvary Hospital, Hobart, Australia
+    name: Petterwood Orthopaedics, Calvary Hospital, Hobart, TAS, Australia
   - id: 4
     name: Steele Research Limited, Eastleigh, Hampshire, UK
   - id: 5
