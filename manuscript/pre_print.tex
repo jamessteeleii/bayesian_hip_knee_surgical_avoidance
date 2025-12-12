@@ -1,0 +1,274 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Latin Modern Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage[font=scriptsize]{caption}
+\usepackage[noblocks]{authblk}
+\renewcommand*{\Authsep}{, }
+\renewcommand*{\Authand}{, }
+\renewcommand*{\Authands}{, }
+\renewcommand\Affilfont{\small}
+\usepackage{etoolbox}
+\AtEndEnvironment{abstract}{\noindent\textbf{Keywords:} \KeywordList \par}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise Based Intervention},
+  pdfauthor={Myles Moore; Brett Long; Dawn Aitken; Josh Petterwood; James Steele},
+  pdfkeywords={TO ADD},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{A Bayesian Analysis Using Informative Priors of Surgical
+Avoidance in Knee and Hip Osteoarthritis Patients Undergoing
+Physiotherapy and Resistance Exercise Based
+Intervention\thanks{Preprint, please cite as: Moore, M., Long, B.,
+Aitken, D., Petterwood, J., and Steele, J. (2025). A Bayesian Analysis
+Using Informative Priors of Surgical Avoidance in Knee and Hip
+Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise
+Based Intervention. medrxiv DOI: TO ADD. Address for correspondence:
+james@steele-research.com}}
+
+
+\author[1,2]{Myles Moore}
+\author[1,6]{Brett Long}
+\author[3]{Dawn Aitken}
+\author[4]{Josh Petterwood}
+\author[1,4,5,6]{James Steele}
+
+\affil[1]{Kieser Australia, Melbourne, Australia}
+\affil[2]{Tasmanian Centre for Mental Health Service Innovation,
+Tasmanian Health Services, Hobart, Australia}
+\affil[3]{Menzies Institute for Medical Research, University of
+Tasmania}
+\affil[4]{Petterwood Orthopaedics, Calvary Hospital, Hobart, Australia}
+\affil[4]{Steele Research Limited, Eastleigh, Hampshire, UK}
+\affil[5]{MacroFactor, Stronger by Science Technologies LLC, Raleigh,
+North Carolina, USA}
+\affil[6]{School of Health and Biomedical Sciences, Royal Melbourne
+Institute of Technology, Melbourne, VIC, Australia}
+
+% Store the keywords (expanded by Pandoc here)
+\def\KeywordList{TO ADD}
+
+\date{December 12, 2025}
+\begin{document}
+\maketitle
+\begin{abstract}
+Background: Surgical intervention for knee and hip osteoarthritis (OA)
+remains common, yet growing evidence suggests that structured
+physiotherapy and resistance exercise programs may be associated with
+delayed need for surgery. This study employs a Bayesian framework to
+estimate the time to surgery following non-surgical interventions,
+leveraging prior evidence through meta-analytic models to generate
+informative priors. Methods: A two-stage Bayesian time-to-event analysis
+was conducted. First, meta-analytic Bayesian discrete time proportional
+hazards models were developed using data from existing studies examining
+surgery rates following physiotherapy and exercise interventions. These
+informed the priors used in a subsequent time-to-event analysis of
+patient-level data collected through private health insurer-funded
+physiotherapy and resistance training programs. Participants (N = 81)
+who had been informed by their surgeon they would need surgery in the
+next three years undertook physiotherapy and resistance exercise
+programmes funded by their private health insurer. They were followed
+for up to five years to observe whether and when joint replacement
+surgery occurred. Posterior distributions were used to estimate survival
+probabilities at the discrete time points followed up (6, 12, 36, and 60
+months). Results: Informative priors derived from 12 prior studies were
+incorporated into the survival model, improving estimation efficiency
+given sparse event data in the observational dataset. During the
+follow-up period there were 23 patients who underwent surgery. Estimated
+probabilities of remaining surgery-free were 89\% {[}95\%CI: 87\%,
+91\%{]} at 6 months, 80\% {[}95\%CI: 77\%, 83\%{]} at 12 months, 74\%
+{[}95\%CI: 70\%, 78\%{]} at 36 months, and 69\% {[}95\%CI: 64\%, 74\%{]}
+at 60 months. Results suggest that a substantial proportion of patients
+who undergo non-surgical intervention may avoid or delay surgery for
+several years. Conclusion: This Bayesian analysis, integrating prior
+evidence and long-term follow-up data, suggests patients who had been
+informed they would require surgery and who engage structured
+physiotherapy and resistance-based exercise interventions may avoid that
+surgery for several years. The use of informative priors enhanced model
+stability and interpretability in the context of moderate event rates.
+\end{abstract}
+
+
+\subsection{Quarto}\label{quarto}
+
+Quarto enables you to weave together content and executable code into a
+finished document. To learn more about Quarto see
+\url{https://quarto.org}.
+
+\subsection{Running Code}\label{running-code}
+
+When you click the \textbf{Render} button a document will be generated
+that includes both content and the output of embedded code. You can
+embed code like this:
+
+\begin{verbatim}
+[1] 2
+\end{verbatim}
+
+You can add options to executable code like this
+
+\begin{verbatim}
+[1] 4
+\end{verbatim}
+
+The \texttt{echo:\ false} option disables the printing of code (only
+output is displayed).
+
+
+
+
+\end{document}
