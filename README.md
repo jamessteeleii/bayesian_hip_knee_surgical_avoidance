@@ -1,4 +1,4 @@
-# A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise Based Intervention
+# A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot Programme of Physiotherapy and Resistance Exercise Based Intervention
 
 ## Abstract
 ### Background:
