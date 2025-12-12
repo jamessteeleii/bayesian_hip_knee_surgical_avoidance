@@ -93,6 +93,39 @@
 \makeatother
 
 
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 
 
@@ -159,7 +192,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise Based Intervention},
+  pdftitle={A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot Programme of Physiotherapy and Resistance Exercise Based Intervention},
   pdfauthor={Myles Moore; Brett Long; Dawn Aitken; Josh Petterwood; James Steele},
   pdfkeywords={TO ADD},
   colorlinks=true,
@@ -171,8 +204,8 @@
 
 
 \title{A Bayesian Analysis Using Informative Priors of Surgical
-Avoidance in Knee and Hip Osteoarthritis Patients Undergoing
-Physiotherapy and Resistance Exercise Based
+Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot
+Programme of Physiotherapy and Resistance Exercise Based
 Intervention\thanks{Preprint, please cite as: Moore, M., Long, B.,
 Aitken, D., Petterwood, J., and Steele, J. (2025). A Bayesian Analysis
 Using Informative Priors of Surgical Avoidance in Knee and Hip
@@ -187,12 +220,13 @@ james@steele-research.com}}
 \author[4]{Josh Petterwood}
 \author[1,4,5,6]{James Steele}
 
-\affil[1]{Kieser Australia, Melbourne, Australia}
+\affil[1]{Kieser Australia, Melbourne, VIC, Australia}
 \affil[2]{Tasmanian Centre for Mental Health Service Innovation,
-Tasmanian Health Services, Hobart, Australia}
+Tasmanian Health Services, Hobart, TAS, Australia}
 \affil[3]{Menzies Institute for Medical Research, University of
-Tasmania}
-\affil[4]{Petterwood Orthopaedics, Calvary Hospital, Hobart, Australia}
+Tasmania, Hobart, TAS, Australia}
+\affil[4]{Petterwood Orthopaedics, Calvary Hospital, Hobart, TAS,
+Australia}
 \affil[4]{Steele Research Limited, Eastleigh, Hampshire, UK}
 \affil[5]{MacroFactor, Stronger by Science Technologies LLC, Raleigh,
 North Carolina, USA}
@@ -243,30 +277,186 @@ stability and interpretability in the context of moderate event rates.
 \end{abstract}
 
 
-\subsection{Quarto}\label{quarto}
+\section{Introduction}\label{introduction}
 
-Quarto enables you to weave together content and executable code into a
-finished document. To learn more about Quarto see
-\url{https://quarto.org}.
+The Global Burden of Disease study has highlighted the growing
+prevalence in Australia of knee and hip osteoarthritis
+(OA)\textsuperscript{1}. This growing burden of places additional
+pressure for individuals with moderate-to-severe knee or hip OA to
+undergo surgery, despite contemporary guidelines recommending
+non-surgical interventions be prioritised in these
+conditions\textsuperscript{2}. As such, surgical intervention for knee
+and hip OA remains common and presents a considerable cost to healthcare
+providers\textsuperscript{3}. This demand for total knee and hip
+replacement surgeries is expected to grow across many countries. Indeed,
+in the United States, it is estimated that there will have been a growth
+of 673\% for total knee replacements and 174\% for total hip
+replacements from 2005 to 2030\textsuperscript{4}, and this growing
+burden have also been predicted to also occur in the United Kingdom,
+Canada, New Zealand, Australia and Sweden, despite results varying
+between countries\textsuperscript{5--9}.
 
-\subsection{Running Code}\label{running-code}
+Contemporary guidelines from\textsuperscript{2} are now recommending
+that non-surgical interventions, such as structured physiotherapy and
+exercise programs, be prioritised for the management of knee and hip OA.
+Indeed, several meta-analyses have shown that exercise-based
+interventions, such as resistance training, has been shown to improve
+pain, function, muscle mass and strength among individuals with knee or
+hip OA {[}\textbf{ADD CITATIONS}{]}. Supervised progressive resistance
+training programmes have also been shown to result in greater adherence
+to treatment, function, pain and quality of life among those individuals
+with knee or hip OA with compared to when they completed a home exercise
+program {[}\textbf{ADD CITATIONS}{]}. Further, in support of
+guidelines\textsuperscript{2}, growing evidence suggests that
+non-surgical interventions such as structured physiotherapy and exercise
+programs may be associated with delayed need for surgery, similar
+clinical outcomes to surgical intervention, and subsequently a
+cost-effective intervention for allowing for early healthcare
+savings\textsuperscript{10,11}. However, despite growing evidence there
+has yet to be any kind of systematic evidence synthesis regarding
+surgery rates subsequent to non-surgical interventions such as
+physiotherapy, exercise, and education.
 
-When you click the \textbf{Render} button a document will be generated
-that includes both content and the output of embedded code. You can
-embed code like this:
+This study reports the results of a pilot programme which involved the
+delivery of a private health insurer-funded structured physiotherapy and
+resistance training programme for patients with moderate-to-severe knee
+or hip OA to undergo surgery who had been told they would require
+surgery within the next 5 years by their surgeon. A Bayesian framework
+was applied to estimate the time to surgery following non-surgical
+interventions, leveraging prior evidence through meta-analytic models of
+existing studies reporting time to surgery to generate informative
+priors for analysis of the pilot data.
 
-\begin{verbatim}
-[1] 2
-\end{verbatim}
+\section{Methods}\label{methods}
 
-You can add options to executable code like this
+\section{Results}\label{results}
 
-\begin{verbatim}
-[1] 4
-\end{verbatim}
+\section{Discussion}\label{discussion}
 
-The \texttt{echo:\ false} option disables the printing of code (only
-output is displayed).
+\section{Conclusion}\label{conclusion}
+
+\section{Financial Disclosures/Conflicts of
+Interest}\label{financial-disclosuresconflicts-of-interest}
+
+ADD OTHERS
+
+James Steele provides research consultancy through his company Steele
+Research Limited, is contracted currently by MacroFactor and Kieser
+Australia through Steele Research Limited, and has also received travel
+expenses and honorarium for speaking from fit20 International, Exercise
+School Portugal, and Discover Strength.
+
+The content is solely the responsibility of the authors and does not
+necessarily represent the official views of any funding agencies or
+institutions noted above. The authors declare no other conflicts of
+interest related to the submitted work.
+
+\section{Data Availability}\label{data-availability}
+
+All code utilised for data preparation, transformations, analyses,
+plotting, and reporting are available in the corresponding GitHub
+repository
+\url{https://github.com/jamessteeleii/bayesian_hip_knee_surgical_avoidance}.
+
+\section{Contributions}\label{contributions}
+
+James Steele, Myles Moore, and Brett Long conceived the idea for the
+project. All authors contributed to the design of the project and
+methods. James Steele performed the data extraction, conducted the
+statistical analyses, and produced the data visualisations. All authors
+contributed to interpreting the results and drafting the initial
+manuscript. All authors contributed to editing the manuscript. All
+authors read and approved the final manuscript.
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\bibitem[\citeproctext]{ref-ackermanGlobalBurdenDisease2023}
+\CSLLeftMargin{1. }%
+\CSLRightInline{Ackerman IN, Buchbinder R, March L. Global {Burden} of
+{Disease Study} 2019: An opportunity to understand the growing
+prevalence and impact of hip, knee, hand and other osteoarthritis in
+{Australia}. \emph{Internal Medicine Journal}. 2023;53(10):1875-1882.
+doi:\href{https://doi.org/10.1111/imj.15933}{10.1111/imj.15933}}
+
+\bibitem[\citeproctext]{ref-australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024}
+\CSLLeftMargin{2. }%
+\CSLRightInline{Australian Commission on Safety and Quality in Health
+Care. \emph{Osteoarthritis of the {Knee Clinical Care Standard} (2024)
+\textbar{} {Australian Commission} on {Safety} and {Quality} in {Health
+Care}}.; 2024.}
+
+\bibitem[\citeproctext]{ref-ackermanProjectedBurdenPrimary2019}
+\CSLLeftMargin{3. }%
+\CSLRightInline{Ackerman IN, Bohensky MA, Zomer E, et al. The projected
+burden of primary total knee and hip replacement for osteoarthritis in
+{Australia} to the year 2030. \emph{BMC Musculoskeletal Disorders}.
+2019;20(1):90.
+doi:\href{https://doi.org/10.1186/s12891-019-2411-9}{10.1186/s12891-019-2411-9}}
+
+\bibitem[\citeproctext]{ref-kurtzProjectionsPrimaryRevision2007}
+\CSLLeftMargin{4. }%
+\CSLRightInline{Kurtz S, Ong K, Lau E, Mowat F, Halpern M. Projections
+of primary and revision hip and knee arthroplasty in the {United States}
+from 2005 to 2030. \emph{The Journal of Bone and Joint Surgery American
+Volume}. 2007;89(4):780-785.
+doi:\href{https://doi.org/10.2106/JBJS.F.00222}{10.2106/JBJS.F.00222}}
+
+\bibitem[\citeproctext]{ref-pedersenTotalHipArthroplasty2005}
+\CSLLeftMargin{5. }%
+\CSLRightInline{Pedersen AB, Johnsen SP, Overgaard S, Søballe K,
+Sørensen HT, Lucht U. Total hip arthroplasty in {Denmark}: Incidence of
+primary operations and revisions during 1996-2002 and estimated future
+demands. \emph{Acta Orthopaedica}. 2005;76(2):182-189.
+doi:\href{https://doi.org/10.1080/00016470510030553}{10.1080/00016470510030553}}
+
+\bibitem[\citeproctext]{ref-hooperCurrentTrendsProjections2014}
+\CSLLeftMargin{6. }%
+\CSLRightInline{Hooper G, Lee AJ-J, Rothwell A, Frampton C.
+\href{https://www.ncbi.nlm.nih.gov/pubmed/25225759}{Current trends and
+projections in the utilisation rates of hip and knee replacement in {New
+Zealand} from 2001 to 2026}. \emph{The New Zealand Medical Journal}.
+2014;127(1401):82-93.}
+
+\bibitem[\citeproctext]{ref-nemesProjectionsTotalHip2014}
+\CSLLeftMargin{7. }%
+\CSLRightInline{Nemes S, Gordon M, Rogmark C, Rolfson O. Projections of
+total hip replacement in {Sweden} from 2013 to 2030. \emph{Acta
+Orthopaedica}. 2014;85(3):238-243.
+doi:\href{https://doi.org/10.3109/17453674.2014.913224}{10.3109/17453674.2014.913224}}
+
+\bibitem[\citeproctext]{ref-cullifordFutureProjectionsTotal2015}
+\CSLLeftMargin{8. }%
+\CSLRightInline{Culliford D, Maskell J, Judge A, et al. Future
+projections of total hip and knee arthroplasty in the {UK}: Results from
+the {UK Clinical Practice Research Datalink}. \emph{Osteoarthritis and
+Cartilage}. 2015;23(4):594-600.
+doi:\href{https://doi.org/10.1016/j.joca.2014.12.022}{10.1016/j.joca.2014.12.022}}
+
+\bibitem[\citeproctext]{ref-sharifProjectingDirectCost2015}
+\CSLLeftMargin{9. }%
+\CSLRightInline{Sharif B, Kopec J, Bansback N, et al. Projecting the
+direct cost burden of osteoarthritis in {Canada} using a microsimulation
+model. \emph{Osteoarthritis and Cartilage}. 2015;23(10):1654-1663.
+doi:\href{https://doi.org/10.1016/j.joca.2015.05.029}{10.1016/j.joca.2015.05.029}}
+
+\bibitem[\citeproctext]{ref-ackermanImplementingNationalFirstline2020}
+\CSLLeftMargin{10. }%
+\CSLRightInline{Ackerman IN, Skou ST, Roos EM, et al. Implementing a
+national first-line management program for moderate-severe knee
+osteoarthritis in {Australia}: {A} budget impact analysis focusing on
+knee replacement avoidance. \emph{Osteoarthritis and Cartilage Open}.
+2020;2(3):100070.
+doi:\href{https://doi.org/10.1016/j.ocarto.2020.100070}{10.1016/j.ocarto.2020.100070}}
+
+\bibitem[\citeproctext]{ref-dockingLifetimeCostEffectivenessStructured2024}
+\CSLLeftMargin{11. }%
+\CSLRightInline{Docking S, Ademi Z, Barton C, et al. Lifetime
+{Cost-Effectiveness} of {Structured Education} and {Exercise Therapy}
+for {Knee Osteoarthritis} in {Australia}. \emph{JAMA Network Open}.
+2024;7(10):e2436715.
+doi:\href{https://doi.org/10.1001/jamanetworkopen.2024.36715}{10.1001/jamanetworkopen.2024.36715}}
+
+\end{CSLReferences}
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: "A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise Based Intervention"
+title: "A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot Programme of Physiotherapy and Resistance Exercise Based Intervention"
 date: last-modified
 date-format: long
 format:
@@ -82,23 +82,33 @@ library(tidybayes)
 targets::tar_config_set(store = here::here('_targets'))
 
 ```
-## Quarto
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+# Introduction
 
-## Running Code
+The Global Burden of Disease study has highlighted the growing prevalence in Australia of knee and hip osteoarthritis (OA) [@ackermanGlobalBurdenDisease2023]. This growing burden of places additional pressure for individuals with moderate-to-severe knee or hip OA to undergo surgery, despite contemporary guidelines recommending non-surgical interventions be prioritised in these conditions [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024]. As such, surgical intervention for knee and hip OA remains common and presents a considerable cost to healthcare providers [@ackermanProjectedBurdenPrimary2019]. This demand for total knee and hip replacement surgeries is expected to grow across many countries. Indeed, in the United States, it is estimated that there will have been a growth of 673% for total knee replacements and 174% for total hip replacements from 2005 to 2030 [@kurtzProjectionsPrimaryRevision2007], and this growing burden have also been predicted to also occur in the United Kingdom, Canada, New Zealand, Australia and Sweden, despite results varying between countries [@pedersenTotalHipArthroplasty2005; @hooperCurrentTrendsProjections2014; @nemesProjectionsTotalHip2014; @cullifordFutureProjectionsTotal2015; @sharifProjectingDirectCost2015]. 
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+Contemporary guidelines from [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024] are now recommending that non-surgical interventions, such as structured physiotherapy and exercise programs, be prioritised for the management of knee and hip OA. Indeed, several meta-analyses have shown that exercise-based interventions, such as resistance training, has been shown to improve pain, function, muscle mass and strength among individuals with knee or hip OA [**ADD CITATIONS**]. Supervised progressive resistance training programmes have also been shown to result in greater adherence to treatment, function, pain and quality of life among those individuals with knee or hip OA with compared to when they completed a home exercise program [**ADD CITATIONS**]. Further, in support of guidelines [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024], growing evidence suggests that non-surgical interventions such as structured physiotherapy and exercise programs may be associated with delayed need for surgery, similar clinical outcomes to surgical intervention, and subsequently a cost-effective intervention for allowing for early healthcare savings [@ackermanImplementingNationalFirstline2020; @dockingLifetimeCostEffectivenessStructured2024]. However, despite growing evidence there has yet to be any kind of systematic evidence synthesis regarding surgery rates subsequent to non-surgical interventions such as physiotherapy, exercise, and education.
 
-```{r}
-1 + 1
-```
+This study reports the results of a pilot programme which involved the delivery of a private health insurer-funded structured physiotherapy and resistance training programme for patients with moderate-to-severe knee or hip OA to undergo surgery who had been told they would require surgery within the next 5 years by their surgeon. A Bayesian framework was applied to estimate the time to surgery following non-surgical interventions, leveraging prior evidence through meta-analytic models of existing studies reporting time to surgery to generate informative priors for analysis of the pilot data.
 
-You can add options to executable code like this 
+# Methods
 
-```{r}
-#| echo: false
-2 * 2
-```
+# Results
 
-The `echo: false` option disables the printing of code (only output is displayed).
+# Discussion
+
+# Conclusion
+
+# Financial Disclosures/Conflicts of Interest
+
+ADD OTHERS
+
+James Steele provides research consultancy through his company Steele Research Limited, is contracted currently by MacroFactor and Kieser Australia through Steele Research Limited, and has also received travel expenses and honorarium for speaking from fit20 International, Exercise School Portugal, and Discover Strength.
+
+The content is solely the responsibility of the authors and does not necessarily represent the official views of any funding agencies or institutions noted above. The authors declare no other conflicts of interest related to the submitted work.
+
+# Data Availability
+All code utilised for data preparation, transformations, analyses, plotting, and reporting are available in the corresponding GitHub repository <https://github.com/jamessteeleii/bayesian_hip_knee_surgical_avoidance>.
+
+# Contributions
+James Steele, Myles Moore, and Brett Long conceived the idea for the project. All authors contributed to the design of the project and methods. James Steele performed the data extraction, conducted the statistical analyses, and produced the data visualisations. All authors contributed to interpreting the results and drafting the initial manuscript. All authors contributed to editing the manuscript. All authors read and approved the final manuscript.
