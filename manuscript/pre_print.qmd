@@ -1,0 +1,114 @@
+---
+title: "A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot Programme of Physiotherapy and Resistance Exercise Based Intervention"
+date: last-modified
+date-format: long
+format:
+  pdf:
+    # documentclass: article
+    keep-tex: true
+    template-partials: 
+     - title.tex
+    pdf-engine: xelatex
+    mainfont: "Latin Modern Roman"
+    include-in-header:
+      text: |
+        \usepackage[font=scriptsize]{caption}
+        \usepackage[noblocks]{authblk}
+        \renewcommand*{\Authsep}{, }
+        \renewcommand*{\Authand}{, }
+        \renewcommand*{\Authands}{, }
+        \renewcommand\Affilfont{\small}
+        \usepackage{etoolbox}
+        \AtEndEnvironment{abstract}{\noindent\textbf{Keywords:} \KeywordList \par}
+geometry:
+  - left=1in
+  - right=1in
+  - top=1in
+  - bottom=1in
+author:
+  - name: Myles Moore
+    affil-id: 1,2
+    orcid: 0000-0002-7156-4087
+    email: myles.moore@kieser.com.au
+  - name: Brett Long
+    affil-id: 1,6
+    orcid: 0000-0002-7156-4087
+    email: brett.long@kieser.com.au
+  - name: Dawn Aitken
+    affil-id: 3
+    orcid: 0000-0001-5685-7634
+    email: dawn.aitken@utas.edu.au
+  - name: Josh Petterwood
+    affil-id: 4
+    email: josh@petterwoodorthopaedics.com
+  - name: James Steele
+    affil-id: 1,4,5,6
+    orcid: 0000-0002-8003-0757
+    corresponding: true
+    email: james@steele-research.com
+affiliations:
+  - id: 1
+    name: Kieser Australia, Melbourne, VIC, Australia
+  - id: 2
+    name: Tasmanian Centre for Mental Health Service Innovation, Tasmanian Health Services, Hobart, TAS, Australia
+  - id: 3
+    name: Menzies Institute for Medical Research, University of Tasmania, Hobart, TAS, Australia
+  - id: 4
+    name: Petterwood Orthopaedics, Calvary Hospital, Hobart, TAS, Australia
+  - id: 4
+    name: Steele Research Limited, Eastleigh, Hampshire, UK
+  - id: 5
+    name: MacroFactor, Stronger by Science Technologies LLC, Raleigh, North Carolina, USA
+  - id: 6
+    name: School of Health and Biomedical Sciences, Royal Melbourne Institute of Technology, Melbourne, VIC, Australia
+abstract: |
+  Background: Surgical intervention for knee and hip osteoarthritis (OA) remains common, yet growing evidence suggests that structured physiotherapy and resistance exercise programs may be associated with delayed need for surgery. This study employs a Bayesian framework to estimate the time to surgery following non-surgical interventions, leveraging prior evidence through meta-analytic models to generate informative priors. Methods: A two-stage Bayesian time-to-event analysis was conducted. First, meta-analytic Bayesian discrete time proportional hazards models were developed using data from existing studies examining surgery rates following physiotherapy and exercise interventions. These informed the priors used in a subsequent time-to-event analysis of patient-level data collected through private health insurer-funded physiotherapy and resistance training programs. Participants (N = 81) who had been informed by their surgeon they would need surgery in the next three years undertook physiotherapy and resistance exercise programmes funded by their private health insurer. They were followed for up to five years to observe whether and when joint replacement surgery occurred. Posterior distributions were used to estimate survival probabilities at the discrete time points followed up (6, 12, 36, and 60 months). Results: Informative priors derived from 12 prior studies were incorporated into the survival model, improving estimation efficiency given sparse event data in the observational dataset. During the follow-up period there were 23 patients who underwent surgery. Estimated probabilities of remaining surgery-free were 89% [95%CI: 87%, 91%] at 6 months, 80% [95%CI: 77%, 83%] at 12 months, 74% [95%CI: 70%, 78%] at 36 months, and 69% [95%CI: 64%, 74%] at 60 months. Results suggest that a substantial proportion of patients who undergo non-surgical intervention may avoid or delay surgery for several years. Conclusion: This Bayesian analysis, integrating prior evidence and long-term follow-up data, suggests patients who had been informed they would require surgery and who engage structured physiotherapy and resistance-based exercise interventions may avoid that surgery for several years. The use of informative priors enhanced model stability and interpretability in the context of moderate event rates. 
+thanks: |
+  Preprint, please cite as: Moore, M., Long, B., Aitken, D., Petterwood, J., and Steele, J. (2025). A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise Based Intervention. medrxiv DOI: TO ADD. Address for correspondence: james@steele-research.com
+keywords: TO ADD
+bibliography: 
+  references.bib
+csl: american-medical-association.csl
+execute: 
+  echo: false
+  message: false
+  warning: false
+---
+```{r}
+library(tidyverse)
+# library(flextable)
+library(tidybayes)
+
+targets::tar_config_set(store = here::here('_targets'))
+
+```
+
+# Introduction
+
+The Global Burden of Disease study has highlighted the growing prevalence in Australia of knee and hip osteoarthritis (OA) [@ackermanGlobalBurdenDisease2023]. This growing burden of places additional pressure for individuals with moderate-to-severe knee or hip OA to undergo surgery, despite contemporary guidelines recommending non-surgical interventions be prioritised in these conditions [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024]. As such, surgical intervention for knee and hip OA remains common and presents a considerable cost to healthcare providers [@ackermanProjectedBurdenPrimary2019]. This demand for total knee and hip replacement surgeries is expected to grow across many countries. Indeed, in the United States, it is estimated that there will have been a growth of 673% for total knee replacements and 174% for total hip replacements from 2005 to 2030 [@kurtzProjectionsPrimaryRevision2007], and this growing burden have also been predicted to also occur in the United Kingdom, Canada, New Zealand, Australia and Sweden, despite results varying between countries [@pedersenTotalHipArthroplasty2005; @hooperCurrentTrendsProjections2014; @nemesProjectionsTotalHip2014; @cullifordFutureProjectionsTotal2015; @sharifProjectingDirectCost2015]. 
+
+Contemporary guidelines from [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024] are now recommending that non-surgical interventions, such as structured physiotherapy and exercise programs, be prioritised for the management of knee and hip OA. Indeed, several meta-analyses have shown that exercise-based interventions, such as resistance training, has been shown to improve pain, function, muscle mass and strength among individuals with knee or hip OA [**ADD CITATIONS**]. Supervised progressive resistance training programmes have also been shown to result in greater adherence to treatment, function, pain and quality of life among those individuals with knee or hip OA with compared to when they completed a home exercise program [**ADD CITATIONS**]. Further, in support of guidelines [@australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024], growing evidence suggests that non-surgical interventions such as structured physiotherapy and exercise programs may be associated with delayed need for surgery, similar clinical outcomes to surgical intervention, and subsequently a cost-effective intervention for allowing for early healthcare savings [@ackermanImplementingNationalFirstline2020; @dockingLifetimeCostEffectivenessStructured2024]. However, despite growing evidence there has yet to be any kind of systematic evidence synthesis regarding surgery rates subsequent to non-surgical interventions such as physiotherapy, exercise, and education.
+
+This study reports the results of a pilot programme which involved the delivery of a private health insurer-funded structured physiotherapy and resistance training programme for patients with moderate-to-severe knee or hip OA to undergo surgery who had been told they would require surgery within the next 5 years by their surgeon. A Bayesian framework was applied to estimate the time to surgery following non-surgical interventions, leveraging prior evidence through meta-analytic models of existing studies reporting time to surgery to generate informative priors for analysis of the pilot data.
+
+# Methods
+
+# Results
+
+# Discussion
+
+# Conclusion
+
+# Financial Disclosures/Conflicts of Interest
+
+ADD OTHERS
+
+James Steele provides research consultancy through his company Steele Research Limited, is contracted currently by MacroFactor and Kieser Australia through Steele Research Limited, and has also received travel expenses and honorarium for speaking from fit20 International, Exercise School Portugal, and Discover Strength.
+
+The content is solely the responsibility of the authors and does not necessarily represent the official views of any funding agencies or institutions noted above. The authors declare no other conflicts of interest related to the submitted work.
+
+# Data Availability
+All code utilised for data preparation, transformations, analyses, plotting, and reporting are available in the corresponding GitHub repository <https://github.com/jamessteeleii/bayesian_hip_knee_surgical_avoidance>.
+
+# Contributions
+James Steele, Myles Moore, and Brett Long conceived the idea for the project. All authors contributed to the design of the project and methods. James Steele performed the data extraction, conducted the statistical analyses, and produced the data visualisations. All authors contributed to interpreting the results and drafting the initial manuscript. All authors contributed to editing the manuscript. All authors read and approved the final manuscript.

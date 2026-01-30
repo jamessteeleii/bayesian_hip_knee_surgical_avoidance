@@ -1,0 +1,464 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Latin Modern Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage[font=scriptsize]{caption}
+\usepackage[noblocks]{authblk}
+\renewcommand*{\Authsep}{, }
+\renewcommand*{\Authand}{, }
+\renewcommand*{\Authands}{, }
+\renewcommand\Affilfont{\small}
+\usepackage{etoolbox}
+\AtEndEnvironment{abstract}{\noindent\textbf{Keywords:} \KeywordList \par}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={A Bayesian Analysis Using Informative Priors of Surgical Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot Programme of Physiotherapy and Resistance Exercise Based Intervention},
+  pdfauthor={Myles Moore; Brett Long; Dawn Aitken; Josh Petterwood; James Steele},
+  pdfkeywords={TO ADD},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{A Bayesian Analysis Using Informative Priors of Surgical
+Avoidance in Knee and Hip Osteoarthritis Patients Undergoing a Pilot
+Programme of Physiotherapy and Resistance Exercise Based
+Intervention\thanks{Preprint, please cite as: Moore, M., Long, B.,
+Aitken, D., Petterwood, J., and Steele, J. (2025). A Bayesian Analysis
+Using Informative Priors of Surgical Avoidance in Knee and Hip
+Osteoarthritis Patients Undergoing Physiotherapy and Resistance Exercise
+Based Intervention. medrxiv DOI: TO ADD. Address for correspondence:
+james@steele-research.com}}
+
+
+\author[1,2]{Myles Moore}
+\author[1,6]{Brett Long}
+\author[3]{Dawn Aitken}
+\author[4]{Josh Petterwood}
+\author[1,4,5,6]{James Steele}
+
+\affil[1]{Kieser Australia, Melbourne, VIC, Australia}
+\affil[2]{Tasmanian Centre for Mental Health Service Innovation,
+Tasmanian Health Services, Hobart, TAS, Australia}
+\affil[3]{Menzies Institute for Medical Research, University of
+Tasmania, Hobart, TAS, Australia}
+\affil[4]{Petterwood Orthopaedics, Calvary Hospital, Hobart, TAS,
+Australia}
+\affil[4]{Steele Research Limited, Eastleigh, Hampshire, UK}
+\affil[5]{MacroFactor, Stronger by Science Technologies LLC, Raleigh,
+North Carolina, USA}
+\affil[6]{School of Health and Biomedical Sciences, Royal Melbourne
+Institute of Technology, Melbourne, VIC, Australia}
+
+% Store the keywords (expanded by Pandoc here)
+\def\KeywordList{TO ADD}
+
+\date{December 12, 2025}
+\begin{document}
+\maketitle
+\begin{abstract}
+Background: Surgical intervention for knee and hip osteoarthritis (OA)
+remains common, yet growing evidence suggests that structured
+physiotherapy and resistance exercise programs may be associated with
+delayed need for surgery. This study employs a Bayesian framework to
+estimate the time to surgery following non-surgical interventions,
+leveraging prior evidence through meta-analytic models to generate
+informative priors. Methods: A two-stage Bayesian time-to-event analysis
+was conducted. First, meta-analytic Bayesian discrete time proportional
+hazards models were developed using data from existing studies examining
+surgery rates following physiotherapy and exercise interventions. These
+informed the priors used in a subsequent time-to-event analysis of
+patient-level data collected through private health insurer-funded
+physiotherapy and resistance training programs. Participants (N = 81)
+who had been informed by their surgeon they would need surgery in the
+next three years undertook physiotherapy and resistance exercise
+programmes funded by their private health insurer. They were followed
+for up to five years to observe whether and when joint replacement
+surgery occurred. Posterior distributions were used to estimate survival
+probabilities at the discrete time points followed up (6, 12, 36, and 60
+months). Results: Informative priors derived from 12 prior studies were
+incorporated into the survival model, improving estimation efficiency
+given sparse event data in the observational dataset. During the
+follow-up period there were 23 patients who underwent surgery. Estimated
+probabilities of remaining surgery-free were 89\% {[}95\%CI: 87\%,
+91\%{]} at 6 months, 80\% {[}95\%CI: 77\%, 83\%{]} at 12 months, 74\%
+{[}95\%CI: 70\%, 78\%{]} at 36 months, and 69\% {[}95\%CI: 64\%, 74\%{]}
+at 60 months. Results suggest that a substantial proportion of patients
+who undergo non-surgical intervention may avoid or delay surgery for
+several years. Conclusion: This Bayesian analysis, integrating prior
+evidence and long-term follow-up data, suggests patients who had been
+informed they would require surgery and who engage structured
+physiotherapy and resistance-based exercise interventions may avoid that
+surgery for several years. The use of informative priors enhanced model
+stability and interpretability in the context of moderate event rates.
+\end{abstract}
+
+
+\section{Introduction}\label{introduction}
+
+The Global Burden of Disease study has highlighted the growing
+prevalence in Australia of knee and hip osteoarthritis
+(OA)\textsuperscript{1}. This growing burden of places additional
+pressure for individuals with moderate-to-severe knee or hip OA to
+undergo surgery, despite contemporary guidelines recommending
+non-surgical interventions be prioritised in these
+conditions\textsuperscript{2}. As such, surgical intervention for knee
+and hip OA remains common and presents a considerable cost to healthcare
+providers\textsuperscript{3}. This demand for total knee and hip
+replacement surgeries is expected to grow across many countries. Indeed,
+in the United States, it is estimated that there will have been a growth
+of 673\% for total knee replacements and 174\% for total hip
+replacements from 2005 to 2030\textsuperscript{4}, and this growing
+burden have also been predicted to also occur in the United Kingdom,
+Canada, New Zealand, Australia and Sweden, despite results varying
+between countries\textsuperscript{5--9}.
+
+Contemporary guidelines from\textsuperscript{2} are now recommending
+that non-surgical interventions, such as structured physiotherapy and
+exercise programs, be prioritised for the management of knee and hip OA.
+Indeed, several meta-analyses have shown that exercise-based
+interventions, such as resistance training, has been shown to improve
+pain, function, muscle mass and strength among individuals with knee or
+hip OA {[}\textbf{ADD CITATIONS}{]}. Supervised progressive resistance
+training programmes have also been shown to result in greater adherence
+to treatment, function, pain and quality of life among those individuals
+with knee or hip OA with compared to when they completed a home exercise
+program {[}\textbf{ADD CITATIONS}{]}. Further, in support of
+guidelines\textsuperscript{2}, growing evidence suggests that
+non-surgical interventions such as structured physiotherapy and exercise
+programs may be associated with delayed need for surgery, similar
+clinical outcomes to surgical intervention, and subsequently a
+cost-effective intervention for allowing for early healthcare
+savings\textsuperscript{10,11}. However, despite growing evidence there
+has yet to be any kind of systematic evidence synthesis regarding
+surgery rates subsequent to non-surgical interventions such as
+physiotherapy, exercise, and education.
+
+This study reports the results of a pilot programme which involved the
+delivery of a private health insurer-funded structured physiotherapy and
+resistance training programme for patients with moderate-to-severe knee
+or hip OA to undergo surgery who had been told they would require
+surgery within the next 5 years by their surgeon. A Bayesian framework
+was applied to estimate the time to surgery following non-surgical
+interventions, leveraging prior evidence through meta-analytic models of
+existing studies reporting time to surgery to generate informative
+priors for analysis of the pilot data.
+
+\section{Methods}\label{methods}
+
+\section{Results}\label{results}
+
+\section{Discussion}\label{discussion}
+
+\section{Conclusion}\label{conclusion}
+
+\section{Financial Disclosures/Conflicts of
+Interest}\label{financial-disclosuresconflicts-of-interest}
+
+ADD OTHERS
+
+James Steele provides research consultancy through his company Steele
+Research Limited, is contracted currently by MacroFactor and Kieser
+Australia through Steele Research Limited, and has also received travel
+expenses and honorarium for speaking from fit20 International, Exercise
+School Portugal, and Discover Strength.
+
+The content is solely the responsibility of the authors and does not
+necessarily represent the official views of any funding agencies or
+institutions noted above. The authors declare no other conflicts of
+interest related to the submitted work.
+
+\section{Data Availability}\label{data-availability}
+
+All code utilised for data preparation, transformations, analyses,
+plotting, and reporting are available in the corresponding GitHub
+repository
+\url{https://github.com/jamessteeleii/bayesian_hip_knee_surgical_avoidance}.
+
+\section{Contributions}\label{contributions}
+
+James Steele, Myles Moore, and Brett Long conceived the idea for the
+project. All authors contributed to the design of the project and
+methods. James Steele performed the data extraction, conducted the
+statistical analyses, and produced the data visualisations. All authors
+contributed to interpreting the results and drafting the initial
+manuscript. All authors contributed to editing the manuscript. All
+authors read and approved the final manuscript.
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{0}{1}
+\bibitem[\citeproctext]{ref-ackermanGlobalBurdenDisease2023}
+\CSLLeftMargin{1. }%
+\CSLRightInline{Ackerman IN, Buchbinder R, March L. Global {Burden} of
+{Disease Study} 2019: An opportunity to understand the growing
+prevalence and impact of hip, knee, hand and other osteoarthritis in
+{Australia}. \emph{Internal Medicine Journal}. 2023;53(10):1875-1882.
+doi:\href{https://doi.org/10.1111/imj.15933}{10.1111/imj.15933}}
+
+\bibitem[\citeproctext]{ref-australiancommissiononsafetyandqualityinhealthcareOsteoarthritisKneeClinical2024}
+\CSLLeftMargin{2. }%
+\CSLRightInline{Australian Commission on Safety and Quality in Health
+Care. \emph{Osteoarthritis of the {Knee Clinical Care Standard} (2024)
+\textbar{} {Australian Commission} on {Safety} and {Quality} in {Health
+Care}}.; 2024.}
+
+\bibitem[\citeproctext]{ref-ackermanProjectedBurdenPrimary2019}
+\CSLLeftMargin{3. }%
+\CSLRightInline{Ackerman IN, Bohensky MA, Zomer E, et al. The projected
+burden of primary total knee and hip replacement for osteoarthritis in
+{Australia} to the year 2030. \emph{BMC Musculoskeletal Disorders}.
+2019;20(1):90.
+doi:\href{https://doi.org/10.1186/s12891-019-2411-9}{10.1186/s12891-019-2411-9}}
+
+\bibitem[\citeproctext]{ref-kurtzProjectionsPrimaryRevision2007}
+\CSLLeftMargin{4. }%
+\CSLRightInline{Kurtz S, Ong K, Lau E, Mowat F, Halpern M. Projections
+of primary and revision hip and knee arthroplasty in the {United States}
+from 2005 to 2030. \emph{The Journal of Bone and Joint Surgery American
+Volume}. 2007;89(4):780-785.
+doi:\href{https://doi.org/10.2106/JBJS.F.00222}{10.2106/JBJS.F.00222}}
+
+\bibitem[\citeproctext]{ref-pedersenTotalHipArthroplasty2005}
+\CSLLeftMargin{5. }%
+\CSLRightInline{Pedersen AB, Johnsen SP, Overgaard S, Søballe K,
+Sørensen HT, Lucht U. Total hip arthroplasty in {Denmark}: Incidence of
+primary operations and revisions during 1996-2002 and estimated future
+demands. \emph{Acta Orthopaedica}. 2005;76(2):182-189.
+doi:\href{https://doi.org/10.1080/00016470510030553}{10.1080/00016470510030553}}
+
+\bibitem[\citeproctext]{ref-hooperCurrentTrendsProjections2014}
+\CSLLeftMargin{6. }%
+\CSLRightInline{Hooper G, Lee AJ-J, Rothwell A, Frampton C.
+\href{https://www.ncbi.nlm.nih.gov/pubmed/25225759}{Current trends and
+projections in the utilisation rates of hip and knee replacement in {New
+Zealand} from 2001 to 2026}. \emph{The New Zealand Medical Journal}.
+2014;127(1401):82-93.}
+
+\bibitem[\citeproctext]{ref-nemesProjectionsTotalHip2014}
+\CSLLeftMargin{7. }%
+\CSLRightInline{Nemes S, Gordon M, Rogmark C, Rolfson O. Projections of
+total hip replacement in {Sweden} from 2013 to 2030. \emph{Acta
+Orthopaedica}. 2014;85(3):238-243.
+doi:\href{https://doi.org/10.3109/17453674.2014.913224}{10.3109/17453674.2014.913224}}
+
+\bibitem[\citeproctext]{ref-cullifordFutureProjectionsTotal2015}
+\CSLLeftMargin{8. }%
+\CSLRightInline{Culliford D, Maskell J, Judge A, et al. Future
+projections of total hip and knee arthroplasty in the {UK}: Results from
+the {UK Clinical Practice Research Datalink}. \emph{Osteoarthritis and
+Cartilage}. 2015;23(4):594-600.
+doi:\href{https://doi.org/10.1016/j.joca.2014.12.022}{10.1016/j.joca.2014.12.022}}
+
+\bibitem[\citeproctext]{ref-sharifProjectingDirectCost2015}
+\CSLLeftMargin{9. }%
+\CSLRightInline{Sharif B, Kopec J, Bansback N, et al. Projecting the
+direct cost burden of osteoarthritis in {Canada} using a microsimulation
+model. \emph{Osteoarthritis and Cartilage}. 2015;23(10):1654-1663.
+doi:\href{https://doi.org/10.1016/j.joca.2015.05.029}{10.1016/j.joca.2015.05.029}}
+
+\bibitem[\citeproctext]{ref-ackermanImplementingNationalFirstline2020}
+\CSLLeftMargin{10. }%
+\CSLRightInline{Ackerman IN, Skou ST, Roos EM, et al. Implementing a
+national first-line management program for moderate-severe knee
+osteoarthritis in {Australia}: {A} budget impact analysis focusing on
+knee replacement avoidance. \emph{Osteoarthritis and Cartilage Open}.
+2020;2(3):100070.
+doi:\href{https://doi.org/10.1016/j.ocarto.2020.100070}{10.1016/j.ocarto.2020.100070}}
+
+\bibitem[\citeproctext]{ref-dockingLifetimeCostEffectivenessStructured2024}
+\CSLLeftMargin{11. }%
+\CSLRightInline{Docking S, Ademi Z, Barton C, et al. Lifetime
+{Cost-Effectiveness} of {Structured Education} and {Exercise Therapy}
+for {Knee Osteoarthritis} in {Australia}. \emph{JAMA Network Open}.
+2024;7(10):e2436715.
+doi:\href{https://doi.org/10.1001/jamanetworkopen.2024.36715}{10.1001/jamanetworkopen.2024.36715}}
+
+\end{CSLReferences}
+
+
+
+
+\end{document}
