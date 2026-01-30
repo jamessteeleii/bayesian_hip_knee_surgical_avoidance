@@ -31,13 +31,19 @@ tar_source("R/functions/.")
 
 # Replace the target list below with your own:
 list(
+  
+  #### Miscellaneous ----
+  
+  #### Reading and preparing data ----
   tar_target(
-    name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
-    # format = "qs" # Efficient storage for general data objects.
+    pilot_data_file,
+    here("data", "initial_pilot_data.csv"),
+    format = "file"
   ),
+  
   tar_target(
-    name = model,
-    command = coefficients(lm(y ~ x, data = data))
+    pilot_data,
+    read_prep_pilot_data(pilot_data_file)
   )
+  
 )

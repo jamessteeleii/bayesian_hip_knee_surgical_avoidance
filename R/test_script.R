@@ -15,7 +15,7 @@ kieser_theme <- theme(
 )
 
 # GMHBA data
-data_gmhba_surgery <- read_csv("initial_gmhba_data.csv") 
+data_gmhba_surgery <- read_csv("data/initial_gmhba_data.csv") 
   # group_by(id) |>
   # mutate(
   #   surgery = case_when(
@@ -42,22 +42,35 @@ data_gmhba_surgery <- read_csv("initial_gmhba_data.csv")
 
 gmhba_data_summary <- data_gmhba_surgery |>
   mutate(event = if_else(surgery == 1, "event", "no_event")) |> 
-  group_by(time) |> 
-  count(event) |> 
+  group_by(time, joint) |> 
+  count(event, .drop = FALSE) |> 
+  filter(!is.na(joint)) |>
   ungroup() |>
   pivot_wider(names_from = event,
               values_from = n) |> 
+  mutate(event = case_when(
+    is.na(event) ~ 0,
+    .default = event
+  )) |>
   mutate(total         = event + no_event,
          time_period = factor(time)) |>
+  group_by(joint) |> 
   mutate(
     dataset = "GMHBA members",
-    joint = "Hip",
+    # joint = "Hip",
     surv = cumprod(1-event/total),
     surv_se = sqrt(((event/total) * (1 - event/total)) / total)
   ) |>
+  ungroup() |>
   add_row(time_period = as.factor(0),
           dataset = "GMHBA members",
-          joint = NA,
+          joint = "Hip",
+          surv = 1,
+          surv_se = 0
+  ) |>
+  add_row(time_period = as.factor(0),
+          dataset = "GMHBA members",
+          joint = "Knee",
           surv = 1,
           surv_se = 0
   ) |>
