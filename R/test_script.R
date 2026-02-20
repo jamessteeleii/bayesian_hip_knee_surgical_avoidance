@@ -1,3 +1,8 @@
+# If needed for KM curves
+# https://doi.org/10.1186/1471-2288-12-9
+# https://link.springer.com/article/10.1186/s12874-021-01308-8
+
+
 library(tidyverse)
 
 

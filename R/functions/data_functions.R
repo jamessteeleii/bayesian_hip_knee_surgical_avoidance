@@ -17,6 +17,8 @@ read_prep_pilot_data <- function(file) {
     group_by(joint) |> 
     mutate(
       study = "Pilot Data",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
@@ -37,7 +39,9 @@ read_prep_pilot_data <- function(file) {
             surv = 1,
             surv_se = 0
     ) |>
-    select(time_period, event, no_event, total, study, joint, surv, surv_se)
+    select(time_period, event, no_event, total, study, joint, surv, surv_se, condition, design)
+  
+  return(data)
   
 }
 
@@ -55,12 +59,16 @@ prepare_prior_data <- function() {
     mutate(
       study = "Skou et al. (2020)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
             study = "Skou et al. (2020)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0
     )
@@ -77,12 +85,16 @@ prepare_prior_data <- function() {
     mutate(
       study = "Gwynne-Jones et al. (2018)",
       joint = "Hip",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
             study = "Gwynne-Jones et al. (2018)",
             joint = "Hip",
+            condition = "Intervention",
+            design = "Single-arm Observational",
             surv = 1,
             surv_se = 0
     )
@@ -99,21 +111,22 @@ prepare_prior_data <- function() {
     mutate(
       study = "Gwynne-Jones et al. (2020)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
             study = "Gwynne-Jones et al. (2020)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Single-arm Observational",
             surv = 1,
             surv_se = 0
     )
   
   gwynne_jones_data <- bind_rows(gwynne_jones_knee_data, gwynne_jones_data_hip)
-  
-  # Bennell et al., (2021) doi: 10.7326/M21-2388
-  # Better Knee, Better Me
-  
+
   # Svege et al., (2015) doi: 10.1136/annrheumdis-2013-203628
   # Follow-up over 6 years for exercise plus education, versus education
   # Hip OA, WOMAC pain 26 (exercise) and 27.3 (education only)
@@ -163,6 +176,8 @@ prepare_prior_data <- function() {
     mutate(
       study = "Svege et al. (2020) - Exercise + Education",
       joint = "Hip",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
@@ -170,6 +185,8 @@ prepare_prior_data <- function() {
     add_row(time_period = as.factor(0),
             study = "Svege et al. (2020) - Exercise + Education",
             joint = "Hip",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0) 
   
@@ -226,6 +243,8 @@ prepare_prior_data <- function() {
     mutate(
       study = "Svege et al. (2020) - Education Only",
       joint = "Hip",
+      condition = "Control",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
@@ -233,8 +252,12 @@ prepare_prior_data <- function() {
     add_row(time_period = as.factor(0),
             study = "Svege et al. (2020) - Education Only",
             joint = "Hip",
+            condition = "Control",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0) 
+  
+  svege_data <- bind_rows(svege_control_data, svege_exercise_data)
   
   # Bove et al. (2018) doi: 10.1093/ptj/pzx104
   # Follow-up over 2 years (only 2 year data reported) for exercise only, ex+booster, ex+manual therapy, and all three
@@ -248,14 +271,18 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Bove et al. (2018) - Exercise",
+      study = "Bove et al. (2018)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Bove et al. (2018) - Exercise",
+            study = "Bove et al. (2018)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
@@ -266,14 +293,18 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Bove et al. (2018) - Exercise + Booster",
+      study = "Bove et al. (2018)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Bove et al. (2018) - Exercise + Booster",
+            study = "Bove et al. (2018)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
@@ -284,14 +315,18 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Bove et al. (2018) - Exercise + Manual Therapy",
+      study = "Bove et al. (2018)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Bove et al. (2018) - Exercise + Manual Therapy",
+            study = "Bove et al. (2018)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
@@ -302,16 +337,22 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Bove et al. (2018) - Exercise + Manual Therapy + Booster",
+      study = "Bove et al. (2018)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Bove et al. (2018) - Exercise + Manual Therapy + Booster",
+            study = "Bove et al. (2018)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
+  
+  bove_data <- bind_rows(bove_ex_data, bove_exb_data, bove_exmt_data, bove_exmtb_data)
   
   
   # Deyle et al. (2005) PMID: 16305269
@@ -325,14 +366,18 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Deyle et al. (2015) - Exercise + Manual Therapy",
+      study = "Deyle et al. (2015)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Deyle et al. (2015) - Exercise + Manual Therapy",
+            study = "Deyle et al. (2015)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
@@ -343,123 +388,22 @@ prepare_prior_data <- function() {
     total = event + no_event
   ) |>
     mutate(
-      study = "Deyle et al. (2015) - Exercise",
+      study = "Deyle et al. (2015)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
-            study = "Deyle et al. (2015) - Exercise",
+            study = "Deyle et al. (2015)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
-  # Nelson et al. (1999) doi: 10.1016/s0003-9993(99)90302-7
-  # Follow-up over average 16 months ILEX/ + General Exercise
-  # Lumbar/cervical pathology, WOMAC
-  
-  nelson_data <- tibble(
-    time_period = as.factor(12),
-    event = 3,
-    no_event = 38,
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Nelson et al. (1999) - Exercise",
-      joint = "Lumbar/Cervical",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Nelson et al. (1999) - Exercise",
-            joint = "Lumbar/Cervical",
-            surv = 1,
-            surv_se = 0)
-  
-  # Ansari et al. (2022) doi: 10.1080/21679169.2020.1786162
-  # Follow-up over average 18 months multimodal intervention
-  # Lumbar, pain 6.6/10, ODI 54.1
-  
-  ansari_data <- tibble(
-    time_period = as.factor(18),
-    event = 9,
-    no_event = 89,
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Ansari et al. (2022) - Exercise + Manual Therapy",
-      joint = "Lumbar",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Ansari et al. (2022) - Exercise + Manual Therapy",
-            joint = "Lumbar",
-            surv = 1,
-            surv_se = 0)
-  
-  # Ansari et al. (2020) doi: 10.1016/j.physio.2020.03.258
-  # Follow-up over 12 months multimodal intervention
-  # Lumbar
-  
-  ansari_abstract_data <- tibble(
-    time_period = as.factor(12),
-    event = 12,
-    no_event = 148,
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Ansari et al. (2020) - Exercise + Manual Therapy",
-      joint = "Lumbar",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Ansari et al. (2020) - Exercise + Manual Therapy",
-            joint = "Lumbar",
-            surv = 1,
-            surv_se = 0)
-  
-  
-  # Minetama et al. (2021) doi: 10.1177/0269215520986688
-  # Follow up at 1 year, supervised physio vs unsupervised exercise
-  # Lumbar stenosis, back pain physio= 5.3/10, home exercise = 4.9/10, leg pain physio= 6.3/10, home exercise = 6.2/10
-  
-  minetama_physio_data <- tibble(
-    time_period = as.factor(12),
-    event = 1,
-    no_event = 38,
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Minetama et al. (2021) - Physiotherapy",
-      joint = "Lumbar",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Minetama et al. (2021) - Physiotherapy",
-            joint = "Lumbar",
-            surv = 1,
-            surv_se = 0)
-  
-  minetama_ex_data <- tibble(
-    time_period = as.factor(12),
-    event = 9,
-    no_event = 30,
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Minetama et al. (2021) - Home Exercise",
-      joint = "Lumbar",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Minetama et al. (2021) - Home Exercise",
-            joint = "Lumbar",
-            surv = 1,
-            surv_se = 0)
+  deyle_data <- bind_rows(deyle_ex_data, deyle_exmt_data)
   
   # Greene and Miles (2022) doi: 10.60118/001c.37664
   # Follow-up over 12/24 months biomechanical footwear intervention
@@ -474,37 +418,18 @@ prepare_prior_data <- function() {
     mutate(
       study = "Greene and Miles (2022) - Biomechanical Footwear",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     add_row(time_period = as.factor(0),
             study = "Greene and Miles (2022) - Biomechanical Footwear",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Single-arm Observational",
             surv = 1,
             surv_se = 0)
-  
-  # Drew et al. (2022) doi: 10.1089/pop.2021.0336
-  # Follow-up over 12/24 months biomechanical footwear intervention
-  # Knee OA, WOMAC pain 54.7/100
-  
-  drew_data <- tibble(
-    time_period = as.factor(c(12,24)),
-    event = c(22,12),
-    no_event = c(237,210),
-    total = event + no_event
-  ) |>
-    mutate(
-      study = "Drew et al. (2022) - Biomechanical Footwear",
-      joint = "Knee",
-      surv = cumprod(1-event/total),
-      surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-    ) |>
-    add_row(time_period = as.factor(0),
-            study = "Drew et al. (2022) - Biomechanical Footwear",
-            joint = "Knee",
-            surv = 1,
-            surv_se = 0)
-  
   
   
   # Pisters et al. (2010) doi: 10.1016/j.joca.2010.05.008
@@ -545,15 +470,19 @@ prepare_prior_data <- function() {
     no_event = total - event
   ) |>
     mutate(
-      study = "Pisters et al. (2010) - Usual Care",
+      study = "Pisters et al. (2010)",
       joint = "Hip/Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     relocate(total, .after = no_event)  |>
     add_row(time_period = as.factor(0),
-            study = "Pisters et al. (2010) - Usual Care",
+            study = "Pisters et al. (2010)",
             joint = "Hip/Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
@@ -581,18 +510,23 @@ prepare_prior_data <- function() {
     no_event = total - event
   ) |>
     mutate(
-      study = "Pisters et al. (2010) - Behavioural Graded Activity",
+      study = "Pisters et al. (2010)",
       joint = "Hip/Knee",
+      condition = "Intervention",
+      design = "Randomised Controlled Trial",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     relocate(total, .after = no_event)  |>
     add_row(time_period = as.factor(0),
-            study = "Pisters et al. (2010) - Behavioural Graded Activity",
+            study = "Pisters et al. (2010)",
             joint = "Hip/Knee",
+            condition = "Intervention",
+            design = "Randomised Controlled Trial",
             surv = 1,
             surv_se = 0)
   
+  pisters_data <- bind_rows(pisters_bga_data, pisters_uc_data)
   
   
   # Dabare et al. (2017) doi: 10.1111/1756-185X.13083
@@ -652,15 +586,19 @@ prepare_prior_data <- function() {
     no_event = total - event
   ) |>
     mutate(
-      study = "Dabare et al., (2017) - OAHKS",
+      study = "Dabare et al., (2017)",
       joint = "Knee",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     relocate(total, .after = no_event)  |>
     add_row(time_period = as.factor(0),
-            study = "Dabare et al., (2017) - OAHKS",
+            study = "Dabare et al., (2017)",
             joint = "Knee",
+            condition = "Intervention",
+            design = "Single-arm Observational",
             surv = 1,
             surv_se = 0)
   
@@ -713,317 +651,37 @@ prepare_prior_data <- function() {
     no_event = total - event
   ) |>
     mutate(
-      study = "Dabare et al., (2017) - OAHKS",
+      study = "Dabare et al., (2017)",
       joint = "Hip",
+      condition = "Intervention",
+      design = "Single-arm Observational",
       surv = cumprod(1-event/total),
       surv_se = sqrt(((event/total) * (1 - event/total)) / total)
     ) |>
     relocate(total, .after = no_event)  |>
     add_row(time_period = as.factor(0),
-            study = "Dabare et al., (2017) - OAHKS",
+            study = "Dabare et al., (2017)",
             joint = "Hip",
+            condition = "Intervention",
+            design = "Single-arm Observational",
             surv = 1,
             surv_se = 0)
   
+  dabare_data <- bind_rows(dabare_hip_data, dabare_knee_data)
   
-  
-  # Use pseudo ipd algorithm?
-  # # Gustafsson et al. (2022) doi: 10.1302/0301-620X.104B7.BJJ-2021-1766.R1
-  # # Follow-up over 9 years (continuous, though discrete by year extracted) for usual care (BOA registry)
-  # # Hip/Knee OA, pain 5.3/10 (knee) 5.5/10 (hip)
-  # 
-  # gustafsson_knee_time <- tibble(
-  #   time = c(0.17063922,
-  #            0.285752979,
-  #            0.373781148,
-  #            0.45503792,
-  #            0.509209101,
-  #            0.563380282,
-  #            0.604008667,
-  #            0.678494041,
-  #            0.732665222,
-  #            0.807150596,
-  #            0.868093174,
-  #            0.942578548,
-  #            0.996749729,
-  #            1.057692308,
-  #            1.111863489,
-  #            1.16603467,
-  #            1.226977248,
-  #            1.260834236,
-  #            1.315005417,
-  #            1.375947996,
-  #            1.430119177,
-  #            1.484290358,
-  #            1.545232936,
-  #            1.579089924,
-  #            1.640032503,
-  #            1.694203684,
-  #            1.755146262,
-  #            1.809317443,
-  #            1.883802817,
-  #            1.917659805,
-  #            1.971830986,
-  #            2.032773564,
-  #            2.086944745,
-  #            2.141115926,
-  #            2.202058505,
-  #            2.256229686,
-  #            2.337486457,
-  #            2.384886241,
-  #            2.445828819,
-  #            2.533856988,
-  #            2.594799567,
-  #            2.655742145,
-  #            2.730227519,
-  #            2.804712893,
-  #            2.879198267,
-  #            2.95368364,
-  #            2.987540628,
-  #            3.048483207,
-  #            3.122968581,
-  #            3.183911159,
-  #            3.23808234,
-  #            3.312567714,
-  #            3.387053088,
-  #            3.441224269,
-  #            3.556338028,
-  #            3.610509209,
-  #            3.705308776,
-  #            3.800108342,
-  #            3.874593716,
-  #            3.989707476,
-  #            4.064192849,
-  #            4.125135428,
-  #            4.172535211,
-  #            4.253791983,
-  #            4.307963164,
-  #            4.389219935,
-  #            4.463705309,
-  #            4.51787649,
-  #            4.612676056,
-  #            4.68716143,
-  #            4.748104009,
-  #            4.80227519,
-  #            4.890303359,
-  #            4.97156013,
-  #            5.046045504,
-  #            5.11375948,
-  #            5.235644637,
-  #            5.343986999,
-  #            5.384615385,
-  #            5.492957746,
-  #            5.533586132,
-  #            5.648699892,
-  #            5.743499458,
-  #            5.817984832,
-  #            5.926327194,
-  #            5.99404117,
-  #            6.095612134,
-  #            6.190411701,
-  #            6.231040087,
-  #            6.319068256,
-  #            6.413867822,
-  #            6.56283857,
-  #            6.691495125,
-  #            6.738894908,
-  #            6.759209101,
-  #            6.793066089,
-  #            6.942036836,
-  #            7.036836403,
-  #            7.070693391,
-  #            7.199349946,
-  #            7.449891658,
-  #            7.483748646,
-  #            7.565005417,
-  #            7.598862405,
-  #            7.72751896,
-  #            7.774918743,
-  #            7.802004334,
-  #            7.862946912,
-  #            7.944203684,
-  #            7.998374865,
-  #            8.059317443,
-  #            8.093174431,
-  #            8.113488624,
-  #            8.133802817,
-  #            8.147345612,
-  #            8.187973998,
-  #            8.208288191,
-  #            8.221830986,
-  #            8.242145179,
-  #            8.282773564,
-  #            8.303087757
-  #            
-  #   )
-  # ) |>
-  #   mutate(time = time*12,
-  #          time_period = case_when(
-  #            time < 12 ~ 12,
-  #            time < 24 ~ 24,
-  #            time < 36 ~ 36,
-  #            time < 48 ~ 48,
-  #            time < 60 ~ 60,
-  #            time < 72 ~ 72,
-  #            time < 84 ~ 84,
-  #            time < 96 ~ 96,
-  #            time < 108 ~108
-  #          )) |>
-  #   group_by(time_period) |>
-  #   count()
-  # 
-  # gustafsson_knee_data <- tibble(
-  #   time_period = as.factor(c(12,24,36,48,60,72,84,96,108)),
-  #   event = gustafsson_knee_time$n,
-  #   total = c(167,161,151,146,139,137),
-  #   no_event = total - event
-  # ) |>
-  #   mutate(
-  #     study = "gustafsson et al., (2017) - OAHKS",
-  #     joint = "Knee",
-  #     surv = cumprod(1-event/total),
-  #     surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-  #   ) |>
-  #   relocate(total, .after = no_event)  |>
-  #   add_row(time_period = as.factor(0),
-  #           study = "gustafsson et al., (2017) - OAHKS",
-  #           joint = "Knee",
-  #           surv = 1,
-  #           surv_se = 0)
-  # 
-  # gustafsson_hip_time <- tibble(
-  #   time = c(0.25909916,
-  #            0.347350095,
-  #            0.420523653,
-  #            0.587058114,
-  #            0.680047653,
-  #            0.748408334,
-  #            0.836332469,
-  #            1.012537248,
-  #            1.08539886,
-  #            1.178269563,
-  #            1.256300561,
-  #            1.34426926,
-  #            1.427380517,
-  #            1.500643202,
-  #            1.588522774,
-  #            1.666821154,
-  #            1.9264937,
-  #            2.009590103,
-  #            2.337905567,
-  #            2.509371741,
-  #            2.675891348,
-  #            2.837434677,
-  #            3.008871143,
-  #            3.082282373,
-  #            3.420312718,
-  #            3.493723949,
-  #            4.420083958
-  #   )
-  # ) |>
-  #   mutate(time = time*12,
-  #          time_period = case_when(
-  #            time < 12 ~ 12,
-  #            time < 24 ~ 24,
-  #            time < 36 ~ 36,
-  #            time < 48 ~ 48,
-  #            time < 60 ~ 60,
-  #            time < 72 ~ 72
-  #          )) |>
-  #   group_by(time_period) |>
-  #   count()
-  # 
-  # gustafsson_hip_data <- tibble(
-  #   time_period = as.factor(c(12,24,36,48,60)),
-  #   event = gustafsson_hip_time$n,
-  #   total = c(80,73,63,58,54),
-  #   no_event = total - event
-  # ) |>
-  #   mutate(
-  #     study = "gustafsson et al., (2017) - OAHKS",
-  #     joint = "Hip",
-  #     surv = cumprod(1-event/total),
-  #     surv_se = sqrt(((event/total) * (1 - event/total)) / total)
-  #   ) |>
-  #   relocate(total, .after = no_event)  |>
-  #   add_row(time_period = as.factor(0),
-  #           study = "gustafsson et al., (2017) - OAHKS",
-  #           joint = "Hip",
-  #           surv = 1,
-  #           surv_se = 0)
-  
-  
-  
-  # https://pmc.ncbi.nlm.nih.gov/articles/PMC10387773/ 
-  
-  bind_rows(
-    skou_data,
-    svege_control_data,
-    svege_exercise_data,
-    bove_ex_data,
-    bove_exb_data,
-    bove_exmt_data,
-    bove_exmtb_data,
-    deyle_ex_data,
-    deyle_exmt_data,
-    nelson_data,
-    ansari_data,
-    ansari_abstract_data,
-    minetama_ex_data,
-    minetama_physio_data,
-    greene_miles_data,
-    drew_data,
-    pisters_bga_data,
-    pisters_uc_data,
-    dabare_hip_data,
-    dabare_knee_data
-  ) |>
-    # mutate(
-    #   wi = 1/surv_se,
-    #   size = 0.5 + 3.0 * (wi - min(wi, na.rm=TRUE))/(max(wi, na.rm=TRUE) - min(wi, na.rm=TRUE))) |>
-    ggplot(aes(x = as.numeric(as.character(time_period)), group=interaction(study,joint), y = surv)) +
-    geom_line(alpha = 0.5) +
-    # geom_point(aes(size=size), alpha(0.5)) +
-    geom_pointrange(aes(ymin = surv-surv_se, ymax = surv+surv_se), size = 0.25, alpha = 0.5) +
-    scale_x_continuous(limits = c(0, 72),
-                       breaks = c(0, 12, 24, 36, 48, 60, 72)) +
-    scale_y_continuous(limits = c(0, 1),
-                       breaks = c(0, 0.25, 0.5, 0.75, 1.0)) +
-    labs(x = "Time (months)",
-         y = "Probability of Avoiding Surgery") +
-    # facet_grid(joint ~ study) +
-    theme_bw()
-  
-  
-  
-  
+  # Combine studies data
   
   combined_studies_data <- bind_rows(
     skou_data,
-    svege_control_data,
-    svege_exercise_data,
-    bove_ex_data,
-    bove_exb_data,
-    bove_exmt_data,
-    bove_exmtb_data,
-    deyle_ex_data,
-    deyle_exmt_data,
-    nelson_data,
-    ansari_data,
-    ansari_abstract_data,
-    minetama_ex_data,
-    minetama_physio_data,
+    svege_data,
+    bove_data,
+    deyle_data,
     greene_miles_data,
-    drew_data,
-    pisters_bga_data,
-    pisters_uc_data,
-    dabare_hip_data,
-    dabare_knee_data
-  ) |>
-    mutate(
-      vi_weight = 1/sqrt(surv_se),
-      time = as.numeric(as.character(time_period)),
-      time_period = as.factor(time)
-    )
+    gwynne_jones_data,
+    pisters_data,
+    dabare_data
+  )
+  
+  return(combined_studies_data)
   
 }

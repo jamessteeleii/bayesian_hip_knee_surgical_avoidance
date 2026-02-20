@@ -44,6 +44,16 @@ list(
   tar_target(
     pilot_data,
     read_prep_pilot_data(pilot_data_file)
+  ),
+  
+  tar_target(
+    prior_studies_data,
+    prepare_prior_data()
+  ),
+  
+  tar_target(
+    all_data,
+    bind_rows(pilot_data, prior_studies_data)
   )
   
 )

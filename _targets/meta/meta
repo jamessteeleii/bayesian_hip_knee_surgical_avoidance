@@ -1,4 +1,7 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 pilot_data_file|stem|23f1b9b52ea8bc3e|744111e4c5a0c5ee|2c530c1562a7fbd1|2024602467|C:/Users/james/Dropbox/Research/Kieser Australia/bayesian_hip_knee_surgical_avoidance/data/initial_pilot_data.csv|t20483.4802325826s|s3859b|3859|file|local|vector|||2.11||
-read_prep_pilot_data|function|4b8bf7d3da7faf3c
-pilot_data|stem|6e3750b6083a5797|34fc580479a7ff95|65c2d83ddcb4e974|-1264416805||t20483.5242841615s|s556b|556|qs|local|vector|||0.23||
+prior_studies_data|stem|725395a5f6b16025|0a5867b0e7a87214|0a79ca465b8fb5fe|2146339452||t20504.4027605566s|s1742b|1742|qs|local|vector|||2.45||
+read_prep_pilot_data|function|09e15170212858ce
+prepare_prior_data|function|7c205562db0dde0b
+pilot_data|stem|4db6f1936d7e55d1|34fc580479a7ff95|53b3416678ad0691|-1264416805||t20504.4044314855s|s620b|620|qs|local|vector|||0.24||
+all_data|stem|aea4a5ad75b55601|6bd25773efc05d99|1fd0445872ce1577|215858948||t20504.4044342382s|s1923b|1923|qs|local|vector|||0||
